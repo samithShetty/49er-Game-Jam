@@ -111,10 +111,12 @@ func get_direction():
 	if Input.is_action_just_pressed("jump" + action_suffix):
 		if is_on_floor():
 			y_dir = -1
-		else:
-			if has_jump:
-				y_dir = -1
-				has_jump = false
+		elif has_jump:
+			y_dir = -1
+			has_jump = false
+	
+	if Input.is_action_just_pressed("fastfall" + action_suffix) and not is_on_floor():
+		y_dir = 1
 			
 		
 	return Vector2(
@@ -132,6 +134,7 @@ func calculate_move_velocity(
 		is_jump_interrupted
 	):
 	var velocity = linear_velocity
+	
 	velocity.x = speed.x * direction.x
 	if direction.y != 0.0:
 		velocity.y = speed.y * direction.y
