@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/art/tileset/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/Actors/Enemy.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://src/Level/ParallaxBackground.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/audio/music/music.ogg" type="AudioStream" id=8]
 [ext_resource path="res://src/Level/Music.gd" type="Script" id=9]
+[ext_resource path="res://src/Objects/Portal2D.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/Screens/EndScreen.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "move"
@@ -265,3 +267,7 @@ position = Vector2( 828.515, 77.262 )
 stream = ExtResource( 8 )
 autoplay = true
 script = ExtResource( 9 )
+
+[node name="Portal2D" parent="." instance=ExtResource( 10 )]
+position = Vector2( 298, 634 )
+next_scene = ExtResource( 11 )
