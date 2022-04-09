@@ -16,6 +16,8 @@ onready var sprite = $Sprite
 onready var sound_jump = $Jump
 onready var gun = sprite.get_node(@"Gun")
 
+var has_jump:bool = true
+var dash_timer:float = 0
 
 func _ready():
 	# Static types are necessary here to avoid warnings.
@@ -52,22 +54,29 @@ func _ready():
 #   you can easily move individual functions.
 func _physics_process(_delta):
 	# Play jump sound
-	if Input.is_action_just_pressed("jump" + action_suffix) and is_on_floor():
+	if Input.is_action_just_pressed("jump" + action_suffix) and has_jump:
 		sound_jump.play()
-
+	
 	var direction = get_direction()
 
+	
 	var is_jump_interrupted = Input.is_action_just_released("jump" + action_suffix) and _velocity.y < 0.0
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
-
-	var snap_vector = Vector2.ZERO
-	if direction.y == 0.0:
-		snap_vector = Vector2.DOWN * FLOOR_DETECT_DISTANCE
+	
+	if dash_timer > 0:
+		dash_timer -= _delta
+		if dash_timer > 0.8:
+			_velocity.x += 400 if _velocity.x >= 0 else -400
+		
+	elif Input.is_action_just_pressed("dash" + action_suffix):
+		dash_timer = 1
+		_velocity.x += 500 if _velocity.x >= 0 else -500
+	
 	var is_on_platform = platform_detector.is_colliding()
-	_velocity = move_and_slide_with_snap(
-		_velocity, snap_vector, FLOOR_NORMAL, not is_on_platform, 4, 0.9, false
+	_velocity = move_and_slide(
+		_velocity, FLOOR_NORMAL, not is_on_platform, 4, 0.9, false
 	)
-
+	
 	# When the character’s direction changes, we want to to scale the Sprite accordingly to flip it.
 	# This will make Robi face left or right depending on the direction you move.
 	if direction.x != 0:
@@ -92,9 +101,23 @@ func _physics_process(_delta):
 
 
 func get_direction():
+	if is_on_floor() or is_on_wall():
+		has_jump = true
+		
+	var y_dir = 0;
+	
+	if Input.is_action_just_pressed("jump" + action_suffix):
+		if is_on_floor():
+			y_dir = -1
+		else:
+			if has_jump:
+				y_dir = -1
+				has_jump = false
+			
+		
 	return Vector2(
 		Input.get_action_strength("move_right" + action_suffix) - Input.get_action_strength("move_left" + action_suffix),
-		-1 if is_on_floor() and Input.is_action_just_pressed("jump" + action_suffix) else 0
+		y_dir
 	)
 
 
