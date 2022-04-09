@@ -64,13 +64,15 @@ func _physics_process(_delta):
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
 	
 	if dash_timer > 0:
-		dash_timer -= _delta
+		dash_timer -= _delta if not is_on_wall() else .5
 		if dash_timer > 0.8:
-			_velocity.x += 400 if _velocity.x >= 0 else -400
+			_velocity.x += 500 * sprite.scale.x
+			_velocity.y = 0
 		
 	elif Input.is_action_just_pressed("dash" + action_suffix):
 		dash_timer = 1
-		_velocity.x += 500 if _velocity.x >= 0 else -500
+		_velocity.x += 500 * sprite.scale.x
+		_velocity.y = 0
 	
 	var is_on_platform = platform_detector.is_colliding()
 	_velocity = move_and_slide(
