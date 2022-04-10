@@ -191,6 +191,7 @@ extents = Vector2( 10, 14 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 16
+
 script = ExtResource( 1 )
 speed = Vector2( 350, 350 )
 
@@ -204,7 +205,7 @@ position = Vector2( 0, -14 )
 texture = ExtResource( 2 )
 hframes = 16
 vframes = 2
-frame = 22
+frame = 5
 
 [node name="Gun" type="Position2D" parent="Sprite"]
 position = Vector2( 14, 1 )

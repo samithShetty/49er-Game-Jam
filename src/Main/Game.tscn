@@ -11,7 +11,7 @@ script = ExtResource( 2 )
 
 [node name="Level" parent="." instance=ExtResource( 3 )]
 
-[node name="HungerZone" parent="Level/Enemies/ShadowKnight" index="0"]
+[node name="HungerZone" parent="Level/Enemies/ShadowKnight" index="3"]
 monitoring = true
 
 [node name="Player" parent="Level" instance=ExtResource( 4 )]
