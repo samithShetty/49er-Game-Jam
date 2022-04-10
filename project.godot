@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Objects/Coin.gd"
 }, {
-"base": "Reference",
+"base": "Actor",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://src/Actors/Enemy.gd"
@@ -67,6 +67,10 @@ CurrRunData="*res://src/SaveData/CurrRunData.tscn"
 [gdnative]
 
 singletons=[  ]
+
+[global]
+
+layer=false
 
 [input]
 
