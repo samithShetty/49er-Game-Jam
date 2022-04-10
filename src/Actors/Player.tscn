@@ -187,10 +187,11 @@ tracks/0/keys = {
 extents = Vector2( 10, 14 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 34, 24 )
+extents = Vector2( 10, 14 )
 
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 30
+collision_mask = 16
+
 script = ExtResource( 1 )
 speed = Vector2( 350, 350 )
 
@@ -198,12 +199,6 @@ speed = Vector2( 350, 350 )
 process_mode = 0
 wait_time = 0.2
 one_shot = true
-
-[node name="PlatformDetector" type="RayCast2D" parent="."]
-visible = false
-exclude_parent = false
-cast_to = Vector2( 0, 6 )
-collision_mask = 0
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -14 )
@@ -244,12 +239,11 @@ shape = SubResource( 11 )
 
 [node name="DamageDetector" type="Area2D" parent="."]
 position = Vector2( 8, -6 )
-collision_mask = 40
-monitorable = false
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetector"]
 modulate = Color( 0.219608, 1, 0, 0.772549 )
-position = Vector2( -8, -18 )
+position = Vector2( -8, -8 )
 shape = SubResource( 12 )
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -257,6 +251,8 @@ position = Vector2( 0, -28 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
 process_mode = 0
+limit_smoothed = true
+smoothing_enabled = true
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
@@ -294,5 +290,5 @@ normal = ExtResource( 8 )
 action = "shoot"
 visibility_mode = 1
 
-[connection signal="area_exited" from="DamageDetector" to="." method="_on_DamageDetector_area_exited"]
 [connection signal="body_entered" from="DamageDetector" to="." method="_on_DamageDetector_body_entered"]
+[connection signal="body_exited" from="DamageDetector" to="." method="_on_DamageDetector_body_exited"]

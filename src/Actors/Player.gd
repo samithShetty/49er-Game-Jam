@@ -9,14 +9,13 @@ const FLOOR_DETECT_DISTANCE = 20.0
 
 export(String) var action_suffix = ""
 
-#onready var platform_detector = $PlatformDetector
 onready var animation_player = $AnimationPlayer
 onready var shoot_timer = $ShootAnimation
 onready var sprite = $Sprite
 onready var sound_jump = $Jump
 onready var gun = sprite.get_node(@"Gun")
 
-var my_damaging_layer: = 4
+var my_damaging_layer: = 8
 var scary_monster_layer: = 6
 var hunger_drain: = 1
 var curr_hunger: = 100
@@ -37,22 +36,26 @@ func _ready():
 		camera.custom_viewport = viewport
 		yield(get_tree(), "idle_frame")
 		camera.make_current()
-
+	
 # These 2 functions theoreticallyapply / remove a penalty to the player's hunger Drain based
 func _on_DamageDetector_body_entered(body: PhysicsBody2D) -> void:
-	
+
 	if body.get_collision_layer() == my_damaging_layer:
 		hunger_drain *= 3 
 	elif body.get_collision_layer() == scary_monster_layer+1:
 		hunger_drain *= 10 
+	
+	print("Entered", body.get_collision_layer(), hunger_drain)
+	
 	return
 
-func _on_DamageDetector_area_exited(area: Area2D) -> void:
-	
-	if area.get_collision_layer() == my_damaging_layer:
+func _on_DamageDetector_body_exited(body: PhysicsBody2D) -> void:
+	if body.get_collision_layer() == my_damaging_layer:
 		hunger_drain /= 3 
-	elif area.get_collision_layer() == scary_monster_layer:
+	elif body.get_collision_layer() == scary_monster_layer:
 		hunger_drain /= 10 
+	print("Exited", body.get_collision_layer(), hunger_drain)
+	
 	return
 # Physics process is a built-in loop in Godot.
 # If you define _physics_process on a node, Godot will call it every frame.
@@ -94,15 +97,13 @@ func _physics_process(_delta):
 		_velocity.y = 0
 	
 	# Only possible when occupying a monster's space
-	while hunger_drain > 1:
-		
-		#slows x movement
-		_velocity.x = 0.0
-		#conditionally slows y movement
-		if _velocity.y < 0:
-			_velocity.y *= 0
+	curr_hunger -= hunger_drain
 	
-	#var is_on_platform = platform_detector.is_colliding()
+	if hunger_drain > 1:
+		_velocity.x *= 0.5
+	if curr_hunger < 1:
+		die()
+	
 	_velocity = move_and_slide(
 		_velocity, FLOOR_NORMAL, true, 4, 0.9, false
 	)
@@ -128,8 +129,7 @@ func _physics_process(_delta):
 			shoot_timer.start()
 		animation_player.play(animation)
 	
-	if curr_hunger < 1:
-		die()
+
 
 
 func get_direction():
@@ -195,5 +195,6 @@ func take_damage(damage: int) -> void:
 	curr_hunger -= damage
 
 func die() -> void:
+	print("You died")
+	#queue_free()
 	
-	queue_free()

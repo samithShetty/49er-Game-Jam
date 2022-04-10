@@ -68,6 +68,10 @@ CurrRunData="*res://src/SaveData/CurrRunData.tscn"
 
 singletons=[  ]
 
+[global]
+
+layer=false
+
 [input]
 
 jump={
