@@ -187,11 +187,10 @@ tracks/0/keys = {
 extents = Vector2( 10, 14 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 10, 14 )
+extents = Vector2( 34, 24 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 16
-
 script = ExtResource( 1 )
 speed = Vector2( 350, 350 )
 
@@ -205,7 +204,7 @@ position = Vector2( 0, -14 )
 texture = ExtResource( 2 )
 hframes = 16
 vframes = 2
-frame = 5
+frame = 16
 
 [node name="Gun" type="Position2D" parent="Sprite"]
 position = Vector2( 14, 1 )
@@ -252,6 +251,8 @@ current = true
 zoom = Vector2( 0.5, 0.5 )
 process_mode = 0
 limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
 smoothing_enabled = true
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="."]

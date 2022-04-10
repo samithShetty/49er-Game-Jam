@@ -15,6 +15,7 @@ onready var sprite = $Sprite
 onready var sound_jump = $Jump
 onready var gun = sprite.get_node(@"Gun")
 
+var upgrade_progress: = Vector2(0,0)
 var my_damaging_layer: = 8
 var scary_monster_layer: = 6
 var hunger_drain: = 1
@@ -195,6 +196,7 @@ func take_damage(damage: int) -> void:
 	curr_hunger -= damage
 
 func die() -> void:
-	print("You died")
+	pass
+	#print("You died")
 	#queue_free()
 	
