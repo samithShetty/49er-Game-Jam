@@ -2,8 +2,8 @@
 
 [ext_resource path="res://src/Actors/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/art/player/robot_demo.png" type="Texture" id=2]
-[ext_resource path="res://assets/audio/sfx/jump.wav" type="AudioStream" id=3]
-[ext_resource path="res://assets/audio/sfx/shoot.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/sfx/Ytil Dash.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/sfx/Ytil Attack 4.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/art/ui/touch_button_left.png" type="Texture" id=5]
 [ext_resource path="res://assets/art/ui/touch_button_right.png" type="Texture" id=6]
 [ext_resource path="res://assets/art/ui/touch_button_jump.png" type="Texture" id=7]
@@ -20,41 +20,6 @@ extents = Vector2( 10, 14 )
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 11, 15 )
 
-[sub_resource type="AtlasTexture" id=30]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 0, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=31]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 2000, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=32]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 4000, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=33]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 6000, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=34]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 8000, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=35]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 10000, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=36]
-flags = 4
-atlas = ExtResource( 13 )
-region = Rect2( 12000, 0, 2000, 2000 )
-
 [sub_resource type="AtlasTexture" id=13]
 flags = 4
 atlas = ExtResource( 10 )
@@ -64,26 +29,6 @@ region = Rect2( 0, 0, 2000, 2000 )
 flags = 4
 atlas = ExtResource( 10 )
 region = Rect2( 2000, 0, 2000, 2000 )
-
-[sub_resource type="AtlasTexture" id=16]
-flags = 4
-atlas = ExtResource( 11 )
-region = Rect2( 2000, 0, 2000, 2500 )
-
-[sub_resource type="AtlasTexture" id=17]
-flags = 4
-atlas = ExtResource( 11 )
-region = Rect2( 4000, 0, 2000, 2500 )
-
-[sub_resource type="AtlasTexture" id=18]
-flags = 4
-atlas = ExtResource( 11 )
-region = Rect2( 6000, 0, 2000, 2500 )
-
-[sub_resource type="AtlasTexture" id=19]
-flags = 4
-atlas = ExtResource( 11 )
-region = Rect2( 8000, 0, 2000, 2500 )
 
 [sub_resource type="AtlasTexture" id=20]
 flags = 4
@@ -135,27 +80,67 @@ flags = 4
 atlas = ExtResource( 12 )
 region = Rect2( 1536, 0, 256, 256 )
 
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 2000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 4000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 6000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 8000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=35]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 10000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=36]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 12000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 2000, 0, 2000, 2500 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 4000, 0, 2000, 2500 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 6000, 0, 2000, 2500 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 8000, 0, 2000, 2500 )
+
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
-"loop": true,
-"name": "walking",
-"speed": 15.0
-}, {
 "frames": [ SubResource( 13 ), SubResource( 14 ) ],
 "loop": true,
 "name": "idle",
 "speed": 2.5
-}, {
-"frames": [  ],
-"loop": true,
-"name": "attack",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
-"loop": false,
-"name": "jump",
-"speed": 10.0
 }, {
 "frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
 "loop": false,
@@ -165,6 +150,21 @@ animations = [ {
 "frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
 "loop": true,
 "name": "run",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
+"loop": true,
+"name": "walking",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "attack",
 "speed": 5.0
 } ]
 
@@ -189,7 +189,7 @@ vframes = 2
 position = Vector2( 14, 1 )
 script = ExtResource( 9 )
 
-[node name="Shoot" type="AudioStreamPlayer2D" parent="Sprite/Gun"]
+[node name="Attack" type="AudioStreamPlayer2D" parent="Sprite/Gun"]
 position = Vector2( -30.6589, -6.13176 )
 stream = ExtResource( 4 )
 
@@ -221,9 +221,6 @@ limit_smoothed = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = true
-
-[node name="Jump" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 0
@@ -261,17 +258,18 @@ visibility_mode = 1
 [node name="Hunger" type="Timer" parent="."]
 autostart = true
 
-
-[connection signal="tree_exited" from="." to="." method="_on_Player_tree_exited"]
-
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -18 )
 scale = Vector2( 0.02, 0.02 )
 frames = SubResource( 15 )
 animation = "walking"
-frame = 2
+frame = 6
 playing = true
 
+[node name="Dash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="tree_exited" from="." to="." method="_on_Player_tree_exited"]
 [connection signal="body_entered" from="DamageDetector" to="." method="_on_DamageDetector_body_entered"]
 [connection signal="body_exited" from="DamageDetector" to="." method="_on_DamageDetector_body_exited"]
 [connection signal="timeout" from="Hunger" to="." method="_on_Hunger_timeout"]

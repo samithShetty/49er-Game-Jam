@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Ytil C̴͈̟̤͍̗̞͙͈̍̉̚ͅO̴̡̹̯̟̾N̴̓̀́̓̇̔͘̕͜͜S̷͖̈́̎̈́̉̔͑̚U̴̮̩̳̲̰͝M̵̡͕̱̣͚̱͐̈́́̌͆̏̓E̵̛̖͚̟͕̤̟͇̭̹̾̌̈́͝.wav-829e138cc883ba02aeb6c0343b8547d9.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Ytil C̴͈̟̤͍̗̞͙͈̍̉̚ͅO̴̡̹̯̟̾N̴̓̀́̓̇̔͘̕͜͜S̷͖̈́̎̈́̉̔͑̚U̴̮̩̳̲̰͝M̵̡͕̱̣͚̱͐̈́́̌͆̏̓E̵̛̖͚̟͕̤̟͇̭̹̾̌̈́͝.wav"
+dest_files=[ "res://.import/Ytil C̴͈̟̤͍̗̞͙͈̍̉̚ͅO̴̡̹̯̟̾N̴̓̀́̓̇̔͘̕͜͜S̷͖̈́̎̈́̉̔͑̚U̴̮̩̳̲̰͝M̵̡͕̱̣͚̱͐̈́́̌͆̏̓E̵̛̖͚̟͕̤̟͇̭̹̾̌̈́͝.wav-829e138cc883ba02aeb6c0343b8547d9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
