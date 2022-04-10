@@ -13,13 +13,14 @@ onready var animation_player = $AnimationPlayer
 onready var shoot_timer = $ShootAnimation
 onready var sprite = $Sprite
 onready var sound_jump = $Jump
+onready var hunger_timer = $Hunger
 onready var gun = sprite.get_node(@"Gun")
 
 var my_damaging_layer: = 8
 var scary_monster_layer: = 6
 var hunger_drain: = 1
-var curr_hunger: = 100
-var max_hunger: = 100
+var curr_hunger:float = 100
+var max_hunger:float = 100
 var has_jump:bool = true
 var dash_timer:float = 0
 
@@ -36,12 +37,13 @@ func _ready():
 		camera.custom_viewport = viewport
 		yield(get_tree(), "idle_frame")
 		camera.make_current()
+	hunger_timer.start(15)
 	
 # These 2 functions theoreticallyapply / remove a penalty to the player's hunger Drain based
 func _on_DamageDetector_body_entered(body: PhysicsBody2D) -> void:
 
 	if body.get_collision_layer() == my_damaging_layer:
-		hunger_drain *= 3 
+		hunger_drain *= 3
 	elif body.get_collision_layer() == scary_monster_layer+1:
 		hunger_drain *= 10 
 	
@@ -77,6 +79,7 @@ func _on_DamageDetector_body_exited(body: PhysicsBody2D) -> void:
 #   you can easily move individual functions.
 func _physics_process(_delta):
 	# Play jump sound
+	print(hunger_timer.get_time_left())
 	if Input.is_action_just_pressed("jump" + action_suffix) and has_jump:
 		sound_jump.play()
 	
@@ -95,14 +98,6 @@ func _physics_process(_delta):
 		dash_timer = 1
 		_velocity.x += 500 * sprite.scale.x
 		_velocity.y = 0
-	
-	# Only possible when occupying a monster's space
-	curr_hunger -= hunger_drain
-	
-	if hunger_drain > 1:
-		_velocity.x *= 0.5
-	if curr_hunger < 1:
-		die()
 	
 	_velocity = move_and_slide(
 		_velocity, FLOOR_NORMAL, true, 4, 0.9, false
@@ -129,8 +124,9 @@ func _physics_process(_delta):
 			shoot_timer.start()
 		animation_player.play(animation)
 	
-
-
+	if hunger_drain > 1:
+		hunger_timer.start(hunger_timer.get_time_left() - _delta*hunger_drain)
+	
 
 func get_direction():
 	if is_on_floor() or is_on_wall():
@@ -192,9 +188,14 @@ func get_new_animation(is_shooting = false):
 	return animation_new
 
 func take_damage(damage: int) -> void:
-	curr_hunger -= damage
+	hunger_timer.start(hunger_timer.get_time_left() - damage)
+
 
 func die() -> void:
 	print("You died")
-	#queue_free()
+	queue_free()
 	
+
+
+func _on_Hunger_timeout():
+	die()
