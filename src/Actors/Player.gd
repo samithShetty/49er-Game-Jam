@@ -27,7 +27,10 @@ export var hunger_int: float = curr_hunger
 var max_hunger:float = 100
 var has_jump:bool = true
 var dash_timer:float = 0
+var consuming:bool = false
+
 var timeout
+
 
 func _ready():
 	# Static types are necessary here to avoid warnings.
@@ -90,7 +93,10 @@ func _physics_process(_delta):
 	
 	if Input.is_action_just_pressed("jump" + action_suffix) and has_jump:
 		sound_jump.play()
-	
+		
+	if Input.is_action_just_pressed("consume" + action_suffix):
+		consuming = true
+		
 	var direction = get_direction()
 			
 	var is_jump_interrupted = Input.is_action_just_released("jump" + action_suffix) and _velocity.y < 0.0
@@ -128,9 +134,12 @@ func _physics_process(_delta):
 		is_shooting = gun.shoot(sprite.scale.x)
 
 	var animation = get_new_animation()
-
-	animated_sprite.play(animation)
 	
+	animated_sprite.play(animation)
+
+	if hunger_drain > 1:
+		hunger_timer.start(hunger_timer.get_time_left() - _delta*hunger_drain)
+
 	#hunger_timer.start(hunger_timer.get_time_left() - _delta*hunger_drain)
 	print(curr_hunger)
 	curr_hunger = hunger_int + (hunger_timer.get_time_left()*_delta*hunger_drain)
@@ -188,7 +197,14 @@ func calculate_move_velocity(
 
 func get_new_animation():
 	var animation_new = ""
-	if is_on_floor():
+	
+	if consuming:
+		if animated_sprite.get_frame() < 5:
+			animation_new = "consume"
+		else:
+			consuming = false
+		
+	elif is_on_floor():
 		if abs(_velocity.x) > 0.1:
 			animation_new = "walking"
 		else:
@@ -201,6 +217,9 @@ func get_new_animation():
 			animation_new = "falling"
 		else:
 			animation_new = "jumping"
+	
+	
+		
 	return animation_new
 
 func take_damage(damage: int) -> void:
