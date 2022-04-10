@@ -199,12 +199,6 @@ process_mode = 0
 wait_time = 0.2
 one_shot = true
 
-[node name="PlatformDetector" type="RayCast2D" parent="."]
-visible = false
-exclude_parent = false
-cast_to = Vector2( 0, 6 )
-collision_mask = 0
-
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -14 )
 texture = ExtResource( 2 )
