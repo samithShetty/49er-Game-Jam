@@ -102,7 +102,7 @@ func _physics_process(_delta):
 		if _velocity.y < 0:
 			_velocity.y *= 0
 	
-	var is_on_platform = platform_detector.is_colliding()
+	#var is_on_platform = platform_detector.is_colliding()
 	_velocity = move_and_slide(
 		_velocity, FLOOR_NORMAL, true, 4, 0.9, false
 	)
