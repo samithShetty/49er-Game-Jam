@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/Actors/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/art/player/robot_demo.png" type="Texture" id=2]
@@ -186,8 +186,11 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 10, 14 )
 
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 34, 24 )
+
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 30
+collision_mask = 22
 script = ExtResource( 1 )
 speed = Vector2( 350, 350 )
 
@@ -206,7 +209,7 @@ position = Vector2( 0, -14 )
 texture = ExtResource( 2 )
 hframes = 16
 vframes = 2
-frame = 16
+frame = 22
 
 [node name="Gun" type="Position2D" parent="Sprite"]
 position = Vector2( 14, 1 )
@@ -234,15 +237,24 @@ anims/run = SubResource( 8 )
 anims/run_weapon = SubResource( 9 )
 anims/standing_weapon_ready = SubResource( 10 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -14 )
+shape = SubResource( 11 )
+
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2( 0, -28 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
 process_mode = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -14 )
-shape = SubResource( 11 )
+[node name="DamageDetector" type="Area2D" parent="."]
+position = Vector2( 8, -6 )
+collision_mask = 40
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetector"]
+modulate = Color( 0.219608, 1, 0, 0.772549 )
+position = Vector2( -8, -18 )
+shape = SubResource( 12 )
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
@@ -279,3 +291,6 @@ scale = Vector2( 1.49157, 1.46265 )
 normal = ExtResource( 8 )
 action = "shoot"
 visibility_mode = 1
+
+[connection signal="area_exited" from="DamageDetector" to="." method="_on_DamageDetector_area_exited"]
+[connection signal="body_entered" from="DamageDetector" to="." method="_on_DamageDetector_body_entered"]

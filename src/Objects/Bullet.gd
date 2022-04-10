@@ -10,5 +10,5 @@ func destroy():
 
 
 func _on_body_entered(body):
-	if body is Enemy:
+	if body is ShadowKnight:
 		body.destroy()

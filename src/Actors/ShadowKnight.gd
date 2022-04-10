@@ -1,4 +1,4 @@
-class_name Enemy
+class_name ShadowKnight
 extends Actor
 
 
@@ -14,8 +14,6 @@ onready var floor_detector_left = $FloorDetectorLeft
 onready var floor_detector_right = $FloorDetectorRight
 onready var sprite = $Sprite
 onready var animation_player = $AnimationPlayer
-
-export var contact_damage = 1
 
 # This function is called when the scene enters the scene tree.
 # We can initialize variables here.

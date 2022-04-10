@@ -11,6 +11,9 @@ script = ExtResource( 2 )
 
 [node name="Level" parent="." instance=ExtResource( 3 )]
 
+[node name="HungerZone" parent="Level/Enemies/ShadowKnight" index="0"]
+monitoring = true
+
 [node name="Player" parent="Level" instance=ExtResource( 4 )]
 position = Vector2( 90, 546 )
 
@@ -18,3 +21,7 @@ position = Vector2( 90, 546 )
 layer = 100
 
 [node name="PauseMenu" parent="InterfaceLayer" instance=ExtResource( 1 )]
+
+[editable path="Level"]
+[editable path="Level/Enemies/ShadowKnight"]
+[editable path="Level/Player"]

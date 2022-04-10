@@ -16,6 +16,11 @@ onready var sprite = $Sprite
 onready var sound_jump = $Jump
 onready var gun = sprite.get_node(@"Gun")
 
+var my_damaging_layer: = 4
+var scary_monster_layer: = 6
+var hunger_drain: = 1
+var curr_hunger: = 100
+var max_hunger: = 100
 var has_jump:bool = true
 var dash_timer:float = 0
 
@@ -33,7 +38,22 @@ func _ready():
 		yield(get_tree(), "idle_frame")
 		camera.make_current()
 
+# These 2 functions theoreticallyapply / remove a penalty to the player's hunger Drain based
+func _on_DamageDetector_body_entered(body: PhysicsBody2D) -> void:
+	
+	if body.get_collision_layer() == my_damaging_layer:
+		hunger_drain *= 3 
+	elif body.get_collision_layer() == scary_monster_layer+1:
+		hunger_drain *= 10 
+	return
 
+func _on_DamageDetector_area_exited(area: Area2D) -> void:
+	
+	if area.get_collision_layer() == my_damaging_layer:
+		hunger_drain /= 3 
+	elif area.get_collision_layer() == scary_monster_layer:
+		hunger_drain /= 10 
+	return
 # Physics process is a built-in loop in Godot.
 # If you define _physics_process on a node, Godot will call it every frame.
 
@@ -59,7 +79,12 @@ func _physics_process(_delta):
 	
 	var direction = get_direction()
 
-	
+	#slows x movement
+	_velocity.x = 0.0
+		#conditionally slows y movement
+	if _velocity.y < 0:
+		_velocity.y *= 0
+			
 	var is_jump_interrupted = Input.is_action_just_released("jump" + action_suffix) and _velocity.y < 0.0
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
 	
@@ -100,6 +125,18 @@ func _physics_process(_delta):
 		if is_shooting:
 			shoot_timer.start()
 		animation_player.play(animation)
+		
+	# Only possible when occupying a monster's space
+	while hunger_drain > 1:
+		
+		#slows x movement
+		_velocity.x = 0.0
+		#conditionally slows y movement
+		if _velocity.y < 0:
+			_velocity.y *= 0
+	
+	if curr_hunger < 1:
+		die()
 
 
 func get_direction():
@@ -160,3 +197,10 @@ func get_new_animation(is_shooting = false):
 	if is_shooting:
 		animation_new += "_weapon"
 	return animation_new
+
+func take_damage(damage: int) -> void:
+	curr_hunger -= damage
+
+func die() -> void:
+	
+	queue_free()
