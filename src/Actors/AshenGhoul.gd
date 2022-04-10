@@ -1,4 +1,4 @@
-class_name ShadowKnight
+class_name AshenGhoul
 extends Actor
 
 
@@ -10,7 +10,7 @@ enum State {
 
 var _state = State.WALKING
 export var attack_frame: = false
-var damage_dealt: = 3
+var damage_dealt: = .01
 var upgrade_count: = Vector2(1,0)
 var animation = ""
 
@@ -30,7 +30,7 @@ func _ready():
 	sight_line.connect("body_entered", self, "_on_PlayerTargetZone_body_entered")
 	sight_line.connect("body_exited", self, "_on_PlayerTargetZone_body_exited")
 	# disables movement inhibition until enemy is out of the camera for the first time
-	#set_physics_process(false)
+	set_physics_process(false)
 	_velocity.x = speed.x
 
 # Physics process is a built-in loop in Godot.
@@ -81,12 +81,10 @@ func _physics_process(_delta):
 		sprite.scale.x = -1
 		attack_box.scale.x = -1
 	#print(_state)
-	#print(player_node.global_position.x)
 	#print(self.global_position.x)
 	#print(self.global_position.x)
 	
-	if attack_frame:
-		player_node.take_damage(damage_dealt)
+	player_node.hunger_timer.start(player_node.hunger_timer.get_time_left() - damage_dealt if attack_frame else 0)
 	
 	if animation != "destroy":
 		animation = get_new_animation()
@@ -115,3 +113,4 @@ func get_new_animation():
 		else:
 			animation_new = "walk"
 	return animation_new
+

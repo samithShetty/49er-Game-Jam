@@ -10,5 +10,5 @@ func destroy():
 
 
 func _on_body_entered(body):
-	if body is ShadowKnight:
+	if body is AshenGhoul or body is ShadowKnight:
 		body.destroy()

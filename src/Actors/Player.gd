@@ -16,19 +16,25 @@ onready var sprite = $Sprite
 onready var sound_jump = $Jump
 onready var hunger_timer = $Hunger
 onready var gun = sprite.get_node(@"Gun")
+onready var game_over = get_node("/root/Game/Level/Portal2D")
 
 var upgrade_progress: = Vector2(0,0)
 var my_damaging_layer: = 8
 var scary_monster_layer: = 6
-var hunger_drain: = 1
-var curr_hunger:float = 100
+var hunger_drain:float = 1
+var curr_hunger:float = 15
+export var hunger_int: float = curr_hunger
 var max_hunger:float = 100
 var has_jump:bool = true
 var dash_timer:float = 0
 var consuming:bool = false
 
+var timeout
+
+
 func _ready():
 	# Static types are necessary here to avoid warnings.
+	#hunger_timer.start(15)
 	var camera: Camera2D = $Camera
 	if action_suffix == "_p1":
 		camera.custom_viewport = $"../.."
@@ -40,15 +46,16 @@ func _ready():
 		camera.custom_viewport = viewport
 		yield(get_tree(), "idle_frame")
 		camera.make_current()
-	hunger_timer.start(15)
+	hunger_timer.connect("timeout()", self, "_on_Hunger_timeout()")
+	
 	
 # These 2 functions theoreticallyapply / remove a penalty to the player's hunger Drain based
 func _on_DamageDetector_body_entered(body: PhysicsBody2D) -> void:
 
 	if body.get_collision_layer() == my_damaging_layer:
-		hunger_drain *= 3
+		hunger_drain += 2.0
 	elif body.get_collision_layer() == scary_monster_layer+1:
-		hunger_drain *= 10 
+		hunger_drain += 9.0 
 	
 	print("Entered", body.get_collision_layer(), hunger_drain)
 	
@@ -56,9 +63,9 @@ func _on_DamageDetector_body_entered(body: PhysicsBody2D) -> void:
 
 func _on_DamageDetector_body_exited(body: PhysicsBody2D) -> void:
 	if body.get_collision_layer() == my_damaging_layer:
-		hunger_drain /= 3 
+		hunger_drain -= 2.0 
 	elif body.get_collision_layer() == scary_monster_layer:
-		hunger_drain /= 10 
+		hunger_drain -= 9.0 
 	print("Exited", body.get_collision_layer(), hunger_drain)
 	
 	return
@@ -82,6 +89,8 @@ func _on_DamageDetector_body_exited(body: PhysicsBody2D) -> void:
 #   you can easily move individual functions.
 func _physics_process(_delta):
 	# Play jump sound
+
+	
 	if Input.is_action_just_pressed("jump" + action_suffix) and has_jump:
 		sound_jump.play()
 		
@@ -130,6 +139,12 @@ func _physics_process(_delta):
 
 	if hunger_drain > 1:
 		hunger_timer.start(hunger_timer.get_time_left() - _delta*hunger_drain)
+
+	#hunger_timer.start(hunger_timer.get_time_left() - _delta*hunger_drain)
+	print(curr_hunger)
+	curr_hunger = hunger_int + (hunger_timer.get_time_left()*_delta*hunger_drain)
+	if hunger_int < 1:
+		die()
 	
 
 func get_direction():
@@ -156,6 +171,8 @@ func get_direction():
 		Input.get_action_strength("move_right" + action_suffix) - Input.get_action_strength("move_left" + action_suffix),
 		y_dir
 	)
+	
+#	calc 
 
 
 # This function calculates a new velocity whenever you need it.
@@ -206,16 +223,18 @@ func get_new_animation():
 	return animation_new
 
 func take_damage(damage: int) -> void:
-	hunger_timer.start(hunger_timer.get_time_left() - damage)
+	if hunger_int - damage <= 0:
+		die()
+	else: hunger_int -= damage
 
+func _on_Hunger_timeout() -> void:
+	hunger_int -= 1
 
 func die() -> void:
-
+	hunger_timer.stop()
 	print("You died")
-	queue_free()
-
+	CurrRunData.set_is_dead(true)
+	game_over.get_tree().change_scene_to(game_over.next_scene)
 	
 
 
-func _on_Hunger_timeout():
-	die()
