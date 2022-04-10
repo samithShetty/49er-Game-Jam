@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://src/Actors/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/art/player/robot_demo.png" type="Texture" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://assets/art/player/jump.png" type="Texture" id=11]
 [ext_resource path="res://assets/art/player/run.png" type="Texture" id=12]
 [ext_resource path="res://assets/art/player/walk.png" type="Texture" id=13]
+[ext_resource path="res://assets/art/player/CONSUME.png" type="Texture" id=14]
+[ext_resource path="res://assets/art/player/attack.png" type="Texture" id=15]
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 10, 14 )
@@ -64,6 +66,46 @@ region = Rect2( 0, 0, 2000, 2000 )
 flags = 4
 atlas = ExtResource( 10 )
 region = Rect2( 2000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=47]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 2150, 2000 )
+
+[sub_resource type="AtlasTexture" id=48]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2150, 0, 2150, 2000 )
+
+[sub_resource type="AtlasTexture" id=49]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 4300, 0, 2150, 2000 )
+
+[sub_resource type="AtlasTexture" id=50]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 6450, 0, 2150, 2000 )
+
+[sub_resource type="AtlasTexture" id=51]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 8600, 0, 2150, 2000 )
+
+[sub_resource type="AtlasTexture" id=44]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 2000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=45]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 4000, 0, 2000, 2000 )
+
+[sub_resource type="AtlasTexture" id=46]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 6000, 0, 2000, 2000 )
 
 [sub_resource type="AtlasTexture" id=16]
 flags = 4
@@ -147,7 +189,12 @@ animations = [ {
 "name": "idle",
 "speed": 2.5
 }, {
-"frames": [  ],
+"frames": [ SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 47 ) ],
+"loop": true,
+"name": "consume",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 44 ), SubResource( 45 ), SubResource( 46 ) ],
 "loop": true,
 "name": "attack",
 "speed": 5.0
@@ -265,9 +312,7 @@ one_shot = true
 position = Vector2( 0, -18 )
 scale = Vector2( 0.02, 0.02 )
 frames = SubResource( 15 )
-animation = "walking"
-frame = 2
-playing = true
+animation = "consume"
 
 [connection signal="body_entered" from="DamageDetector" to="." method="_on_DamageDetector_body_entered"]
 [connection signal="body_exited" from="DamageDetector" to="." method="_on_DamageDetector_body_exited"]
