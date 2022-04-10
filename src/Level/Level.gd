@@ -1,9 +1,9 @@
 extends Node2D
 
-const LIMIT_LEFT = -315
-const LIMIT_TOP = -250
-const LIMIT_RIGHT = 955
-const LIMIT_BOTTOM = 690
+const LIMIT_LEFT = -381
+const LIMIT_TOP = -159
+const LIMIT_RIGHT = 1055
+const LIMIT_BOTTOM = 864
 
 func _ready():
 	for child in get_children():
