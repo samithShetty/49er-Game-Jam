@@ -187,7 +187,7 @@ tracks/0/keys = {
 extents = Vector2( 10, 14 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 34, 24 )
+extents = Vector2( 11, 15 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 16
@@ -239,6 +239,7 @@ shape = SubResource( 11 )
 [node name="DamageDetector" type="Area2D" parent="."]
 position = Vector2( 8, -6 )
 collision_mask = 8
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetector"]
 modulate = Color( 0.219608, 1, 0, 0.772549 )
@@ -292,9 +293,9 @@ action = "shoot"
 visibility_mode = 1
 
 [node name="Hunger" type="Timer" parent="."]
-process_mode = 0
-one_shot = true
+autostart = true
 
+[connection signal="tree_exited" from="." to="." method="_on_Player_tree_exited"]
 [connection signal="body_entered" from="DamageDetector" to="." method="_on_DamageDetector_body_entered"]
 [connection signal="body_exited" from="DamageDetector" to="." method="_on_DamageDetector_body_exited"]
 [connection signal="timeout" from="Hunger" to="." method="_on_Hunger_timeout"]

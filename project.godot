@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Actors/Actor.gd"
 }, {
+"base": "Actor",
+"class": "AshenGhoul",
+"language": "GDScript",
+"path": "res://src/Actors/AshenGhoul.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Bullet",
 "language": "GDScript",
@@ -46,6 +51,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Actor": "",
+"AshenGhoul": "",
 "Bullet": "",
 "Coin": "",
 "Enemy": "",
