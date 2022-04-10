@@ -71,6 +71,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ), Vector2( 4, 2 ), Vector2( 5, 2 ), Vector2( 6, 2 ), Vector2( 7, 2 ), Vector2( 8, 2 ), Vector2( 9, 2 ), Vector2( 10, 2 ), Vector2( 11, 2 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:attack_frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "destroy"
@@ -142,7 +154,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 1.5 ),
+"times": PoolRealArray( 2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -225,10 +237,10 @@ offsets = PoolRealArray( 0.5, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
 
 [sub_resource type="CircleShape2D" id=12]
-radius = 90.4489
+radius = 62.0
 
 [node name="ShadowKnight" type="KinematicBody2D"]
-collision_layer = 8
+collision_layer = 0
 collision_mask = 16
 script = ExtResource( 1 )
 
@@ -239,7 +251,7 @@ scale = Vector2( 1.1, 1.1 )
 texture = ExtResource( 2 )
 hframes = 23
 vframes = 5
-frame = 57
+frame = 92
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -319,7 +331,7 @@ physics_process_parent = true
 
 [node name="PlayerTargetZone" type="Area2D" parent="."]
 collision_layer = 0
-monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerTargetZone"]
 position = Vector2( 0, -4 )
