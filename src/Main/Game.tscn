@@ -17,10 +17,17 @@ monitoring = true
 [node name="Player" parent="Level" instance=ExtResource( 4 )]
 position = Vector2( 90, 546 )
 
+[node name="AnimatedSprite" parent="Level/Player" index="8"]
+frame = 3
+
 [node name="InterfaceLayer" type="CanvasLayer" parent="."]
 layer = 100
 
 [node name="PauseMenu" parent="InterfaceLayer" instance=ExtResource( 1 )]
+margin_left = -287.0
+margin_top = -145.0
+margin_right = 28.0
+margin_bottom = 141.0
 
 [editable path="Level"]
 [editable path="Level/Enemies/ShadowKnight"]
