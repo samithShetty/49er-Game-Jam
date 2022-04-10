@@ -10,6 +10,7 @@ const FLOOR_DETECT_DISTANCE = 20.0
 export(String) var action_suffix = ""
 
 onready var animation_player = $AnimationPlayer
+onready var animated_sprite = $AnimatedSprite
 onready var shoot_timer = $ShootAnimation
 onready var sprite = $Sprite
 onready var sound_jump = $Jump
@@ -80,7 +81,6 @@ func _on_DamageDetector_body_exited(body: PhysicsBody2D) -> void:
 #   you can easily move individual functions.
 func _physics_process(_delta):
 	# Play jump sound
-	print(hunger_timer.get_time_left())
 	if Input.is_action_just_pressed("jump" + action_suffix) and has_jump:
 		sound_jump.play()
 	
@@ -92,13 +92,14 @@ func _physics_process(_delta):
 	if dash_timer > 0:
 		dash_timer -= _delta if not is_on_wall() else .5
 		if dash_timer > 0.8:
-			_velocity.x += 500 * sprite.scale.x
+			_velocity.x += 500 * (-1 if animated_sprite.is_flipped_h() else 1)
 			_velocity.y = 0
 		
 	elif Input.is_action_just_pressed("dash" + action_suffix):
 		dash_timer = 1
-		_velocity.x += 500 * sprite.scale.x
+		_velocity.x += 500 * (-1 if animated_sprite.is_flipped_h() else 1)
 		_velocity.y = 0
+		
 	
 	_velocity = move_and_slide(
 		_velocity, FLOOR_NORMAL, true, 4, 0.9, false
@@ -107,9 +108,9 @@ func _physics_process(_delta):
 	# This will make Robi face left or right depending on the direction you move.
 	if direction.x != 0:
 		if direction.x > 0:
-			sprite.scale.x = 1
+			animated_sprite.set_flip_h(false)
 		else:
-			sprite.scale.x = -1
+			animated_sprite.set_flip_h(true)
 
 	# We use the sprite's scale to store Robi’s look direction which allows us to shoot
 	# bullets forward.
@@ -119,11 +120,9 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("shoot" + action_suffix):
 		is_shooting = gun.shoot(sprite.scale.x)
 
-	var animation = get_new_animation(is_shooting)
-	if animation != animation_player.current_animation and shoot_timer.is_stopped():
-		if is_shooting:
-			shoot_timer.start()
-		animation_player.play(animation)
+	var animation = get_new_animation()
+
+	animated_sprite.play(animation)
 	
 	if hunger_drain > 1:
 		hunger_timer.start(hunger_timer.get_time_left() - _delta*hunger_drain)
@@ -138,9 +137,12 @@ func get_direction():
 	if Input.is_action_just_pressed("jump" + action_suffix):
 		if is_on_floor():
 			y_dir = -1
+			animated_sprite.play("jump")
 		elif has_jump:
 			y_dir = -1
 			has_jump = false
+			animated_sprite.play("jump")
+			
 	
 	if Input.is_action_just_pressed("fastfall" + action_suffix) and not is_on_floor():
 		y_dir = 1
@@ -172,20 +174,21 @@ func calculate_move_velocity(
 	return velocity
 
 
-func get_new_animation(is_shooting = false):
+func get_new_animation():
 	var animation_new = ""
 	if is_on_floor():
 		if abs(_velocity.x) > 0.1:
-			animation_new = "run"
+			animation_new = "walking"
 		else:
 			animation_new = "idle"
 	else:
-		if _velocity.y > 0:
+		if abs(_velocity.x) > 400:
+			animation_new = "walking"
+		
+		elif _velocity.y > 0:
 			animation_new = "falling"
 		else:
 			animation_new = "jumping"
-	if is_shooting:
-		animation_new += "_weapon"
 	return animation_new
 
 func take_damage(damage: int) -> void:
