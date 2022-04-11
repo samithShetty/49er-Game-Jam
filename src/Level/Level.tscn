@@ -1,9 +1,9 @@
 [gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://src/Actors/ShadowKnight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/audio/music/Carcosa.wav" type="AudioStream" id=2]
 [ext_resource path="res://src/Level/Level.gd" type="Script" id=5]
 [ext_resource path="res://assets/art/background/Star of Carcosa.png" type="Texture" id=7]
-[ext_resource path="res://assets/audio/music/music.ogg" type="AudioStream" id=8]
 [ext_resource path="res://src/Level/Music.gd" type="Script" id=9]
 [ext_resource path="res://src/Objects/Portal2D.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/Screens/EndScreen.tscn" type="PackedScene" id=11]
@@ -793,7 +793,7 @@ position = Vector2( 472, 693 )
 position = Vector2( 189, 229 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
+stream = ExtResource( 2 )
 autoplay = true
 script = ExtResource( 9 )
 
